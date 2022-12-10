@@ -1533,7 +1533,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 			{
 				if(is_ecx_enabled(ecx))
 				{
-					eax = arch_atomic_read(&type_exits_counter[(int)ecx]);
+					eax = arch_atomic_read(&exits_type_counter[(int)ecx]);
 				}
 				else
 				{
