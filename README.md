@@ -1,4 +1,4 @@
-<h2 align="center">CMPE-283 Assignment 2 (Instrumentation via hypercall)</h2>
+<h2 align="center">CMPE-283 Assignment 3 (Instrumentation via hypercall)</h2>
 
 <b>Please refer screenshots folder to verify the completion of this assignment.</b>
 <br/>
@@ -7,8 +7,8 @@
 <h4>Work done by each member of the team.</h4>
 
    * Piyush Mamidwar (016709966)
-      * Modified the vmx.c file to implement leafs 0x4FFFFFFC and 0x4FFFFFFD.
-      * Wrote test.c file to print total exits and total cycles.
+      * Modified the vmx.c file to implement leafs 0x4FFFFFFC, 0x4FFFFFFD, 0x4FFFFFFF and 0x4FFFFFFE.
+      * Wrote test.c file to print total exits and total cycles for all types of exits.
       * Debugged errors that occured after editing vmx.c and cpuid.c files.
       * Install virt manager and the nested VM and installed ubuntu OS on it.
       * Figured out how to access inner VM on GCP. Couldn't access inner VM using CLI. (Used Chrome remote desktop)
@@ -17,7 +17,7 @@
    * Harsh Patel (016567005)
       * Configured the VM to enable nested virtualization and to make builds faster and increased storage space.
       * Cloned the linux repo and configured it correctly for the current VM installed all the required modules to build it.
-      * Modified the vmx.c file to count total number of exits and to find total cycles.
+      * Modified the vmx.c file to count total number of exits and to find total cycles for all types of exits.
       * Built and installed the modified kernel and verified if it is correctly installed.
       * Wrote some of the steps on how to perform this assignment.
 <br/>
@@ -85,7 +85,7 @@
 15. Open virt manager and install this ubuntu image on your inner VM using the GUI.
     * ```sudo virt-manager```
  
-16. Now we can perform Assignment 2 on the inner VM. Create or copy test.c file from this repo on to you inner VM.
+16. Now we can perform Assignment 3 on the inner VM. Create or copy test.c file from this repo on to you inner VM.
 
 17. Compile and run test.c to verify the result.
    
