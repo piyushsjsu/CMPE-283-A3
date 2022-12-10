@@ -1501,6 +1501,14 @@ atomic64_t total_cycles_count = ATOMIC64_INIT(0);
 
 EXPORT_SYMBOL(total_cycles_count);
 
+atomic_t exits_type_counter[70];
+
+EXPORT_SYMBOL(exits_type_counter);
+
+atomic64_t cpu_cycles_counter[70];
+
+EXPORT_SYMBOL(cpu_cycles_counter);
+
 int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 {
 	uint64_t total_cycles;
@@ -1520,6 +1528,56 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 			ebx = (total_cycles >> 32);
 			ecx = (total_cycles & 0xFFFFFFFF);
 			break;
+		case 0x4FFFFFFE:
+			if(is_ecx_in_sdm(&ecx))
+			{
+				if(is_ecx_enabled(ecx))
+				{
+					eax = arch_atomic_read(&type_exits_counter[(int)ecx]);
+				}
+				else
+				{
+					eax = 0;
+					ebx = 0;
+					ecx = 0;
+					edx = 0;
+				}
+			}
+			else
+			{
+				eax = 0;
+				ebx = 0;
+				ecx = 0;
+				edx = 0xFFFFFFFF;	
+			}
+			break;
+		case 0x4FFFFFFF:
+			if(is_ecx_in_sdm(&ecx))
+			{
+				if(is_ecx_enabled(ecx))
+				{
+					total_cycles = atomic64_read(&cpu_cycles_counter[(int)ecx]);
+					//high 32 bits
+					ebx = (total_cycles >> 32);
+					//low 32 bits
+					ecx = (total_cycles & 0xFFFFFFFF);
+				}
+				else
+				{
+					eax = 0;
+					ebx = 0;
+					ecx = 0;
+					edx = 0;
+				}
+			}
+			else
+			{
+				eax = 0;
+				ebx = 0;
+				ecx = 0;
+				edx = 0xFFFFFFFF;	
+			}
+			break;
 		default:
 			kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
 	}
@@ -1531,3 +1589,27 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 	return kvm_skip_emulated_instruction(vcpu);
 }
 EXPORT_SYMBOL_GPL(kvm_emulate_cpuid);
+
+
+bool is_ecx_in_sdm(u32 ecx)
+{
+	return (ecx >=0 &&
+		ecx <=69 &&
+		ecx != 35 &&
+		ecx != 38 &&
+		ecx != 42);
+}
+
+
+bool is_ecx_enabled(u32 ecx)
+{
+	return (ecx !=5 &&
+		ecx !=6 &&
+		ecx != 11 &&
+		ecx != 17 &&
+		ecx != 65 &&
+	       	ecx != 66 &&
+	       	ecx != 69);
+}
+		
+
