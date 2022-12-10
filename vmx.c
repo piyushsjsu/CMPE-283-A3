@@ -6277,6 +6277,9 @@ void dump_vmcs(struct kvm_vcpu *vcpu)
 }
 extern atomic_t total_exits_count;
 extern atomic64_t total_cycles_count;
+extern atomic_t exits_type_counter[70];
+extern atomic64_t cpu_cycles_counter[70];
+
 /*
  * The guest has exited.  See if we can fix it or if we need userspace
  * assistance.
@@ -6448,10 +6451,16 @@ static int __vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 	if (!kvm_vmx_exit_handlers[exit_handler_index])
 		goto unexpected_vmexit;
         arch_atomic_inc(&total_exits_count);
+	if (exit_reason.basic < 70) {
+		arch_atomic_inc(&exits_type_counter[(int)exit_reason.basic]);
+	}
 	start_ts_count = rdtsc();
 	exit_handler_status = kvm_vmx_exit_handlers[exit_handler_index](vcpu);
 	end_ts_count = rdtsc();
 	arch_atomic64_add((end_ts_count - start_ts_count), &total_cycles_count);
+	if (exit_reason.basic < 70) {
+		arch_atomic64_add((end_ts_count - start_ts_count), &cpu_cycles_counter[(int)exit_reason.basic]);
+	}
 	return exit_handler_status;
 
 unexpected_vmexit:
