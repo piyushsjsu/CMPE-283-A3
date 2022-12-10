@@ -4,6 +4,22 @@
 <br/>
 <br/>
 
+<h2>Questions</h2>
+
+   * <h5>Does the number of exits increase at a stable rate? Or are there more exits performed during certain VM operations?</h5>
+   
+      * Some exits do increase at a stable rate while some of them stay the same. When a browser is started or a process is executed some exits jump at an unstable rate.
+   
+   * <h5>Approximately how many exits does a full VM boot entail?</h5>
+   
+      * The VM boot entails approximately 1284502 exits with total cyle time : 18733836564.
+   
+   * <h5>Of the exit types defined in the SDM, which are the most frequent? Least?</h5>
+   
+      * Of the exit types defined in the SDM, EXIT_REASON_EPT_VIOLATION(48) occurs most frequently (please refer screenshots for proof) and EXIT_REASON_DR_ACCESS(29) occurs least frequently.   
+
+<br/>
+
 <h4>Work done by each member of the team.</h4>
 
    * Piyush Mamidwar (016709966)
