@@ -1591,25 +1591,25 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 EXPORT_SYMBOL_GPL(kvm_emulate_cpuid);
 
 
-bool is_ecx_in_sdm(u32 ecx)
-{
-	return (ecx >=0 &&
-		ecx <=69 &&
-		ecx != 35 &&
-		ecx != 38 &&
-		ecx != 42);
-}
+// bool is_ecx_in_sdm(u32 ecx)
+// {
+// 	return (ecx >=0 &&
+// 		ecx <=69 &&
+// 		ecx != 35 &&
+// 		ecx != 38 &&
+// 		ecx != 42);
+// }
 
 
-bool is_ecx_enabled(u32 ecx)
-{
-	return (ecx !=5 &&
-		ecx !=6 &&
-		ecx != 11 &&
-		ecx != 17 &&
-		ecx != 65 &&
-	       	ecx != 66 &&
-	       	ecx != 69);
-}
+// bool is_ecx_enabled(u32 ecx)
+// {
+// 	return (ecx !=5 &&
+// 		ecx !=6 &&
+// 		ecx != 11 &&
+// 		ecx != 17 &&
+// 		ecx != 65 &&
+// 	       	ecx != 66 &&
+// 	       	ecx != 69);
+// }
 		
 
