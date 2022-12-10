@@ -37,6 +37,26 @@ u32 xstate_required_size(u64 xstate_bv, bool compacted);
 int cpuid_query_maxphyaddr(struct kvm_vcpu *vcpu);
 u64 kvm_vcpu_reserved_gpa_bits_raw(struct kvm_vcpu *vcpu);
 
+static inline bool is_ecx_in_sdm(u32 ecx)
+{
+	return (ecx >=0 &&
+		ecx <=69 &&
+		ecx != 35 &&
+		ecx != 38 &&
+		ecx != 42);
+}
+static inline bool is_ecx_enabled(u32 ecx)
+{
+	return (ecx !=5 &&
+		ecx !=6 &&
+		ecx != 11 &&
+		ecx != 17 &&
+		ecx != 65 &&
+	       	ecx != 66 &&
+	       	ecx != 69);
+}
+
+
 static inline int cpuid_maxphyaddr(struct kvm_vcpu *vcpu)
 {
 	return vcpu->arch.maxphyaddr;
