@@ -1529,7 +1529,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 			ecx = (total_cycles & 0xFFFFFFFF);
 			break;
 		case 0x4FFFFFFE:
-			if(is_ecx_in_sdm(&ecx))
+			if(is_ecx_in_sdm(ecx))
 			{
 				if(is_ecx_enabled(ecx))
 				{
@@ -1552,7 +1552,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 			}
 			break;
 		case 0x4FFFFFFF:
-			if(is_ecx_in_sdm(&ecx))
+			if(is_ecx_in_sdm(ecx))
 			{
 				if(is_ecx_enabled(ecx))
 				{
